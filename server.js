@@ -39,6 +39,12 @@ hbs.registerHelper('screamIt', (text) => {
   return text.toUpperCase();
 })
 
+// Needed to put the full path here, otherwise help.html was not found.
+// Suspect the above app.set needed to use path (e.g., require(path))
+app.get('/help', (request, response) => {
+  response.sendFile(__dirname + '/public/help.html');
+});
+
 // root route sets two properties to be passed to dynamic web pages for
 // rendering/display.
 app.get('/', (request, response) => {
@@ -48,15 +54,16 @@ app.get('/', (request, response) => {
   });
 });
 
-app.get('/help', (request, response) => {
-  response.sendFile(__dirname + '/public/help.html');
-});
-
 app.get('/about', (request, response) => {
   response.render('about.hbs', {
-    pageTitle: 'About Page',
-    currentYear: new Date().getFullYear()
-  });
+    pageTitle: 'About Page'
+  })
+});
+
+app.get('/projects', (request, response) => {
+  response.render('projects.hbs', {
+    pageTitle: 'Projects Page'
+  })
 });
 
 app.get('/bad', (request, response) => {
