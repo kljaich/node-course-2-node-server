@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 
 var app = express();
 
-hbs.registerPartials(__dirname + '\\views\\partials')
+hbs.registerPartials(__dirname + '/views/partials')
 app.set('view engine', 'hbs');
 
 app.use((request, response, next) => {
@@ -27,7 +27,7 @@ app.use((request, response, next) => {
 
 // Order of app.use important, as don't want to support rendering of
 // help.html when website is under maintenance.
-app.use(express.static(__dirname + '\\public'));
+app.use(express.static(__dirname + '/public'));
 
 // Helpers are preferred before property data.  Helpers are called
 // directly in html files.
@@ -46,6 +46,10 @@ app.get('/', (request, response) => {
     pageTitle: 'Home Page',
     welcomeMessage: 'Welcome to this website, I hope you enjoy your visit',
   });
+});
+
+app.get('/help', (request, response) => {
+  response.sendFile(__dirname + '/public/help.html');
 });
 
 app.get('/about', (request, response) => {
